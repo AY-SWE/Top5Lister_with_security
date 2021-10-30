@@ -16,6 +16,44 @@ getLoggedIn = async (req, res) => {
     })
 }
 
+loginUser = async(req, res) => {
+    try{
+        const {email, password} = req.body;
+        const existingUser = await User.findOne({ email: email});
+        const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
+
+        if (!passwordCorrect) {
+            return res
+                .status(401)
+                .json({
+                    success: false,
+                    errorMessage: "Wrong password or email, son."
+                })
+        }
+
+        const token = auth.signToken(existingUser);
+
+        await res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).status(200).json({
+            success: true,
+            user: {
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,
+                email: existingUser.email
+            }
+        }).send();
+
+    }catch (err) {
+        console.error(err);
+        res.status(500).send();
+    }
+
+}
+
+
 registerUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, passwordVerify } = req.body;
@@ -38,6 +76,7 @@ registerUser = async (req, res) => {
                     errorMessage: "Please enter the same password twice."
                 })
         }
+
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
             return res
@@ -80,5 +119,6 @@ registerUser = async (req, res) => {
 
 module.exports = {
     getLoggedIn,
-    registerUser
+    registerUser,
+    loginUser
 }
