@@ -174,7 +174,7 @@ function GlobalStoreContextProvider(props) {
                     async function getListPairs(top5List) {
                         response = await api.getTop5ListPairs();
                         if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
+                            let pairsArray = response.data.idNamePairs.filter((e) => e.ownerEmail == auth.user.email);
                             storeReducer({
                                 type: GlobalStoreActionType.CHANGE_LIST_NAME,
                                 payload: {
