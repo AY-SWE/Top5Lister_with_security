@@ -29,6 +29,7 @@ function ListCard(props) {
 
     function handleToggleEdit(event) {
         event.stopPropagation();
+        setText(idNamePair.name);   //adding this will fix the error where if you edit a listname and made no change and press enter an error shows up
         toggleEdit();
     }
 
@@ -42,6 +43,7 @@ function ListCard(props) {
 
     async function handleDeleteList(event, id) {
         event.stopPropagation();
+        console.log("delete button pressed");
         store.markListForDeletion(id);
     }
 
@@ -77,6 +79,7 @@ function ListCard(props) {
                         <EditIcon style={{fontSize:'48pt'}} />
                     </IconButton>
                 </Box>
+
                 <Box sx={{ p: 1 }}>
                     <IconButton onClick={(event) => {
                         handleDeleteList(event, idNamePair._id)
@@ -84,6 +87,7 @@ function ListCard(props) {
                         <DeleteIcon style={{fontSize:'48pt'}} />
                     </IconButton>
                 </Box>
+                
         </ListItem>
 
     if (editActive) {

@@ -4,8 +4,10 @@ import ListCard from './ListCard.js'
 import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
+
+import DeleteModal from './DeleteModal';
 /*
-    This React component lists all the top5 lists in the UI.
+    This React component lists all the top5 lists in the UI.    This is ListSelector in HW3
     
     @author McKilla Gorilla
 */
@@ -51,6 +53,7 @@ const HomeScreen = () => {
                 {
                     listCard
                 }
+                <DeleteModal />
             </div>
         </div>)
 }
