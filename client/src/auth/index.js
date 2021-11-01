@@ -101,8 +101,7 @@ function AuthContextProvider(props) {
         //console.log(userData);
         const response = await api.loginUser(userData);      
         if (response.status === 200) {
-            // console.log("hello");
-            // console.log(response.data.user);
+            console.log(response.data.user);
             authReducer({
                 type: AuthActionType.LOGIN_USER,
                 payload: {
