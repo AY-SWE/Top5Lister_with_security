@@ -81,7 +81,6 @@ function AuthContextProvider(props) {
                 }
             });
         }
-        //history.push("/");
     }
 
     auth.registerUser = async function(userData, store) {

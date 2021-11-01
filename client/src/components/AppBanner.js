@@ -12,6 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
+import Button from '@mui/material/Button';
+
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
@@ -80,8 +82,24 @@ export default function AppBanner() {
         }
     }
     
+    // function getAccountMenu(loggedIn) {
+    //     return <AccountCircle />;
+        
+    // }
+
     function getAccountMenu(loggedIn) {
-        return <AccountCircle />;
+        if(loggedIn){
+            return <Button 
+            style={{fontSize: '20px' ,color: '#FFFFFF'}}
+            >
+            {auth.user.firstName.toString().charAt(0) + auth.user.lastName.toString().charAt(0)}
+            
+            </Button>;
+        }
+        else{
+            return <AccountCircle />;
+            
+        }
     }
 
     return (
