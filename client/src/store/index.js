@@ -261,6 +261,11 @@ function GlobalStoreContextProvider(props) {
         store.showDeleteListModal();
     }
 
+    store.showAccountErrorModal = function() {
+        let modal = document.getElementById("error-modal");
+        modal.classList.add("is-visible");
+    }
+
     store.showDeleteListModal = function() {
         let modal = document.getElementById("delete-modal");
         modal.classList.add("is-visible");
@@ -288,6 +293,7 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.UNMARK_LIST_FOR_DELETION,
             payload: null
         });
+        store.hideDeleteListModal();
     }
 
     // THE FOLLOWING 8 FUNCTIONS ARE FOR COORDINATING THE UPDATING

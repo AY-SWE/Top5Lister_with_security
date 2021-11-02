@@ -30,6 +30,7 @@ function DeleteModal() {
     function handleCloseModal(event) {   //when cancel is clicked
         let newModalOpen = !modalOpen;  //becomes false
         setModalOpen(newModalOpen);
+        store.unmarkListForDeletion();
     }
 
     return (
@@ -61,28 +62,6 @@ function DeleteModal() {
         </div>
         </Modal>
 
-        // <div
-        //     className="modal"
-        //     id="delete-modal"
-        //     data-animation="slideInOutLeft">
-        //     <div className="modal-dialog">
-        //         <header className="dialog-header">
-        //             Delete the {name} Top 5 List?
-        //         </header>
-        //         <div id="confirm-cancel-container">
-        //             <button
-        //                 id="dialog-yes-button"
-        //                 className="modal-button"
-        //                 onClick={handleDeleteList}
-        //             >Confirm</button>
-        //             <button
-        //                 id="dialog-no-button"
-        //                 className="modal-button"
-        //                 onClick={handleCloseModal}
-        //             >Cancel</button>
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 

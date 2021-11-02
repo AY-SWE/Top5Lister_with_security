@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import api from '../api'
 
+
 const AuthContext = createContext();
 console.log("create AuthContext: " + AuthContext);
 
@@ -58,8 +59,9 @@ function AuthContextProvider(props) {
     }
 
     auth.getLoggedIn = async function () {
-        const response = await api.getLoggedIn();
-        if (response.status === 200) {
+        try {
+            const response = await api.getLoggedIn();
+            if (response.status === 200) {
             authReducer({
                 type: AuthActionType.GET_LOGGED_IN,
                 payload: {
@@ -67,6 +69,10 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             });
+            }
+        } catch (error) {
+            console.log("getLoggedIn error message is: "+ error.response.data.errorMessage);
+            
         }
     }
 
@@ -84,31 +90,42 @@ function AuthContextProvider(props) {
     }
 
     auth.registerUser = async function(userData, store) {
-        const response = await api.registerUser(userData);      
-        if (response.status === 200) {
-            authReducer({
+        try {
+            const response = await api.registerUser(userData);      
+            if (response.status === 200) {
+                authReducer({
                 type: AuthActionType.REGISTER_USER,
                 payload: {
                     user: response.data.user
                 }
             })
             history.push("/");
+            }
+            
+        } catch (error) {
+            console.log(error.response.data.errorMessage);
+            store.showAccountErrorModal();
         }
     }
 
     auth.loginUser = async function(userData, store) {
         //console.log(userData);
-        const response = await api.loginUser(userData);      
-        if (response.status === 200) {
-            console.log(response.data.user);
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
-            store.loadIdNamePairs();
+        try {
+            const response = await api.loginUser(userData);      
+            if (response.status === 200) {
+                console.log(response.data.user);
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+                store.loadIdNamePairs();
+            }
+        } catch (error) {
+            console.log(error.response.data.errorMessage);
+            store.showAccountErrorModal();
         }
     }
 
