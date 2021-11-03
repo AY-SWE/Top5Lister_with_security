@@ -4,5 +4,6 @@ export default function SplashScreen() {
             The Top 5<br />
             Lister
         </div>
+        
     )
 }

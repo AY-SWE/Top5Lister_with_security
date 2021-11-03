@@ -1,8 +1,12 @@
-import { useContext } from 'react'
+import { useContext} from 'react'
+import { useHistory } from 'react-router-dom'
+import AuthContext from '../auth'
+
 import Top5Item from './Top5Item.js'
 import List from '@mui/material/List';
 import { Typography } from '@mui/material'
 import { GlobalStoreContext } from '../store/index.js'
+
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -10,7 +14,15 @@ import { GlobalStoreContext } from '../store/index.js'
     @author McKilla Gorilla
 */
 function WorkspaceScreen() {
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
+
+    const history = useHistory();
+
+    if(!auth.loggedIn){
+        store.currentList = null;
+        history.push("/");
+    }
 
     let editItems = "";
     if (store.currentList) {
