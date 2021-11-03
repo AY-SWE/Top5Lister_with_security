@@ -23,6 +23,9 @@ function WorkspaceScreen() {
         store.currentList = null;
         history.push("/");
     }
+    // else{
+    //     history.push("/top5list/" + store.currentList._id);
+    // }
 
     let editItems = "";
     if (store.currentList) {

@@ -5,6 +5,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import RedoIcon from '@mui/icons-material/Redo';
 import CloseIcon from '@mui/icons-material/HighlightOff';
 
+
 /*
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
@@ -13,6 +14,16 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
 */
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
+
+    let undoButtonClass = true;
+    let redoButtonClass = true;
+    let closeButtonClass = false;
+    if (store.canUndo()) {
+    console.log("canundo");
+    undoButtonClass = false;
+    }
+    if (store.canRedo()) redoButtonClass = false;
+    //if (store.canClose) closeButtonClass = false;
 
     function handleUndo() {
         console.log("undo clicked");
@@ -26,35 +37,39 @@ function EditToolbar() {
         store.closeCurrentList();
     }
 
-    let enabledButtonClass = "top5-button";
+    //let enabledButtonClass = "top5-button";
     
     let editStatus = false;
-    if (store.isListNameEditActive) {
-        editStatus = true;
-    }  
+    
+    if (store.isItemEditActive) {  //if there is currentList, don't make the buttons look disabled
+        closeButtonClass = true;
+
+        //closeEditStatus = false;
+        //toggleEdit();
+    }
     return (
         <div id="edit-toolbar">
             <Button 
-                disabled={editStatus}
+                disabled={undoButtonClass}
                 id='undo-button'
                 onClick={handleUndo}
-                className={enabledButtonClass}
+                className={undoButtonClass}
                 variant="contained">
                     <UndoIcon />
             </Button>
             <Button 
-                disabled={editStatus}
+                disabled={redoButtonClass}
                 id='redo-button'
-                className={enabledButtonClass}
+                className={redoButtonClass}
                 onClick={handleRedo}
                 variant="contained">
                     <RedoIcon />
             </Button>
             <Button 
-                disabled={editStatus}
+                disabled={closeButtonClass}
                 id='close-button'
                 onClick={handleClose}
-                className={enabledButtonClass}
+                className={closeButtonClass}
                 variant="contained">
                     <CloseIcon />
             </Button>

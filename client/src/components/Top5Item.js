@@ -91,6 +91,7 @@ function Top5Item(props) {
                 required
                 fullWidth
                 id={"item-" + (index+1)}
+                label="Top 5 Item"
                 className='top5-item'
                 onKeyPress={handleKeyPress}
                 defaultValue={props.text}
