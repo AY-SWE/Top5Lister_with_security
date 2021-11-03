@@ -39,13 +39,11 @@ function EditToolbar() {
 
     //let enabledButtonClass = "top5-button";
     
-    let editStatus = false;
-    
-    if (store.isItemEditActive) {  //if there is currentList, don't make the buttons look disabled
+    if (store.isItemEditActive) {  
         closeButtonClass = true;
+        undoButtonClass = true;
+        redoButtonClass = true;
 
-        //closeEditStatus = false;
-        //toggleEdit();
     }
     return (
         <div id="edit-toolbar">
