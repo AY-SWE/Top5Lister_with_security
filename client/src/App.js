@@ -9,6 +9,7 @@ import {
   RegisterScreen,
   Statusbar,
   WorkspaceScreen,
+  NavigateBar,
 } from "./components";
 import LoginScreen from "./components/LoginScreen";
 /*

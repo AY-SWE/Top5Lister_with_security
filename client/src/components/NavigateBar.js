@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 
-export default function AppBanner() {
+export default function NavigateBar() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -121,7 +121,7 @@ export default function AppBanner() {
   if (location.pathname == "/" && !auth.loggedIn) {
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{ background: "lightgrey" }}>
+        <AppBar position="static" style={{ background: "#a19e9e" }}>
           <Toolbar>
             <Typography
               variant="h4"
@@ -159,7 +159,7 @@ export default function AppBanner() {
   } else {
     return (
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" style={{ background: "lightgrey" }}>
+        <AppBar position="static" style={{ background: "#a19e9e" }}>
           <Toolbar>
             <Typography
               variant="h4"
