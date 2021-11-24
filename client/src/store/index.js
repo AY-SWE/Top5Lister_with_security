@@ -245,9 +245,15 @@ function GlobalStoreContextProvider(props) {
       name: newListName,
       items: ["?", "?", "?", "?", "?"],
       ownerEmail: auth.user.email,
+      likes: [],
+      dislikes: [],
+      views: 0,
+      publishStatus: false,
+      comments: [],
     };
     const response = await api.createTop5List(payload);
     if (response.data.success) {
+      console.log(response.data);
       tps.clearAllTransactions();
       let newList = response.data.top5List;
       storeReducer({
@@ -339,7 +345,7 @@ function GlobalStoreContextProvider(props) {
     let response = await api.getTop5ListById(id);
     if (response.data.success) {
       let top5List = response.data.top5List;
-
+      top5List.views = top5List.views + 1;
       response = await api.updateTop5ListById(top5List._id, top5List);
       if (response.data.success) {
         storeReducer({

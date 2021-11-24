@@ -86,8 +86,16 @@ loginUser = async (req, res) => {
 
 registerUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, passwordVerify } = req.body;
-    if (!firstName || !lastName || !email || !password || !passwordVerify) {
+    const { firstName, lastName, email, password, passwordVerify, username } =
+      req.body;
+    if (
+      !firstName ||
+      !lastName ||
+      !email ||
+      !password ||
+      !passwordVerify ||
+      !username
+    ) {
       return res
         .status(400)
         .json({ errorMessage: "Please enter all required fields." });
@@ -111,6 +119,14 @@ registerUser = async (req, res) => {
       });
     }
 
+    const existingUserName = await User.findOne({ username: username });
+    if (existingUserName) {
+      return res.status(400).json({
+        success: false,
+        errorMessage: "An account with this username already exists.",
+      });
+    }
+
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const passwordHash = await bcrypt.hash(password, salt);
@@ -120,6 +136,7 @@ registerUser = async (req, res) => {
       lastName,
       email,
       passwordHash,
+      username,
     });
     const savedUser = await newUser.save();
 
@@ -139,6 +156,8 @@ registerUser = async (req, res) => {
           firstName: savedUser.firstName,
           lastName: savedUser.lastName,
           email: savedUser.email,
+          passwordHash: savedUser.passwordHash,
+          username: savedUser.username,
         },
       })
       .send();
