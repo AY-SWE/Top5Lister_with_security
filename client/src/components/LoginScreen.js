@@ -27,7 +27,7 @@ export default function LoginScreen() {
     const formData = new FormData(event.currentTarget);
     auth.loginUser(
       {
-        email: formData.get("email"),
+        username: formData.get("username"),
         password: formData.get("password"),
       },
       store
@@ -58,10 +58,10 @@ export default function LoginScreen() {
               <TextField
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>

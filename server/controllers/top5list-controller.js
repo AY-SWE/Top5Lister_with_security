@@ -55,6 +55,7 @@ updateTop5List = async (req, res) => {
     top5List.name = body.name;
     top5List.items = body.items;
     top5List.views = body.views;
+    top5List.username = body.username;
     top5List
       .save()
       .then(() => {
@@ -133,6 +134,7 @@ getTop5ListPairs = async (req, res) => {
           dislikes: list.dislikes,
           comments: list.comments,
           views: list.views,
+          username: list.username, //added this allows "by: to show"
         };
         pairs.push(pair);
       }

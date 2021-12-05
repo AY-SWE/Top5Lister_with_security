@@ -16,7 +16,7 @@ function Statusbar() {
   function handleCreateNewList() {
     store.createNewList();
   }
-  if (store.currentList) {
+  if (store.currentModeActive == "home") {
     text = (
       <div id="list-selector-heading">
         <Button

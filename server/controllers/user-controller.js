@@ -22,6 +22,7 @@ getLoggedIn = async (req, res) => {
         firstName: loggedInUser.firstName,
         lastName: loggedInUser.lastName,
         email: loggedInUser.email,
+        username: loggedInUser.username,
       },
     });
   } catch (err) {
@@ -46,8 +47,8 @@ logoutUser = async (req, res) => {
 
 loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const existingUser = await User.findOne({ email: email });
+    const { email, password, username } = req.body;
+    const existingUser = await User.findOne({ username: username });
     const passwordCorrect = await bcrypt.compare(
       password,
       existingUser.passwordHash
@@ -75,6 +76,7 @@ loginUser = async (req, res) => {
           firstName: existingUser.firstName,
           lastName: existingUser.lastName,
           email: existingUser.email,
+          username: existingUser.username,
         },
       })
       .send();

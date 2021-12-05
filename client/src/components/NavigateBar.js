@@ -96,7 +96,8 @@ export default function NavigateBar() {
   // }
 
   function handleHome() {
-    history.push("/login/");
+    //history.push("/login/");
+    store.homeButtonActive();
   }
   function handleAllLists() {
     history.push("/login/");

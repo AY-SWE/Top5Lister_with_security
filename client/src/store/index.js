@@ -27,6 +27,10 @@ export const GlobalStoreActionType = {
   SET_CURRENT_LIST: "SET_CURRENT_LIST",
   SET_ITEM_EDIT_ACTIVE: "SET_ITEM_EDIT_ACTIVE",
   SET_LIST_NAME_EDIT_ACTIVE: "SET_LIST_NAME_EDIT_ACTIVE",
+  HOME_BUTTON_ACTIVE: "HOME_BUTTON_ACTIVE",
+  ALL_LISTS_BUTTON_ACTIVE: "ALL_LISTS_BUTTON_ACTIVE",
+  ALL_USERS_BUTTON_ACTIVE: "ALL_USERS_BUTTON_ACTIVE",
+  COMMUNITY_BUTTON_ACTIVE: "COMMUNITY_BUTTON_ACTIVE",
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -43,6 +47,7 @@ function GlobalStoreContextProvider(props) {
     listNameActive: false,
     itemActive: false,
     listMarkedForDeletion: null,
+    currentModeActive: null,
     canUndo: false,
     canRedo: false,
     canClose: false,
@@ -69,6 +74,7 @@ function GlobalStoreContextProvider(props) {
           canUndo: tps.hasTransactionToUndo(),
           canRedo: tps.hasTransactionToRedo(),
           canClose: store.currentList !== null,
+          currentModeActive: payload.currentModeActive,
         });
       }
       // STOP EDITING THE CURRENT LIST
@@ -105,7 +111,7 @@ function GlobalStoreContextProvider(props) {
       // GET ALL THE LISTS SO WE CAN PRESENT THEM
       case GlobalStoreActionType.LOAD_ID_NAME_PAIRS: {
         return setStore({
-          idNamePairs: payload,
+          idNamePairs: payload.idNamePairs,
           currentList: null,
           newListCounter: store.newListCounter,
           isListNameEditActive: false,
@@ -114,6 +120,7 @@ function GlobalStoreContextProvider(props) {
           canUndo: tps.hasTransactionToUndo(),
           canRedo: tps.hasTransactionToRedo(),
           canClose: store.currentList !== null,
+          currentModeActive: payload.currentModeActive,
         });
       }
       // PREPARE TO DELETE A LIST
@@ -187,6 +194,50 @@ function GlobalStoreContextProvider(props) {
           canClose: store.currentList !== null,
         });
       }
+      case GlobalStoreActionType.HOME_BUTTON_ACTIVE: {
+        return setStore({
+          idNamePairs: store.idNamePairs,
+          currentList: payload,
+          newListCounter: store.newListCounter,
+          isListNameEditActive: true,
+          isItemEditActive: false,
+          listMarkedForDeletion: null,
+          currentModeActive: payload,
+        });
+      }
+      case GlobalStoreActionType.ALL_LISTS_BUTTON_ACTIVE: {
+        return setStore({
+          idNamePairs: store.idNamePairs,
+          currentList: payload,
+          newListCounter: store.newListCounter,
+          isListNameEditActive: true,
+          isItemEditActive: false,
+          listMarkedForDeletion: null,
+          currentModeActive: payload,
+        });
+      }
+      case GlobalStoreActionType.ALL_USERS_BUTTON_ACTIVE: {
+        return setStore({
+          idNamePairs: store.idNamePairs,
+          currentList: payload,
+          newListCounter: store.newListCounter,
+          isListNameEditActive: true,
+          isItemEditActive: false,
+          listMarkedForDeletion: null,
+          currentModeActive: payload,
+        });
+      }
+      case GlobalStoreActionType.COMMUNITY_BUTTON_ACTIVE: {
+        return setStore({
+          idNamePairs: store.idNamePairs,
+          currentList: payload,
+          newListCounter: store.newListCounter,
+          isListNameEditActive: true,
+          isItemEditActive: false,
+          listMarkedForDeletion: null,
+          currentModeActive: payload,
+        });
+      }
       default:
         return store;
     }
@@ -208,6 +259,7 @@ function GlobalStoreContextProvider(props) {
           async function getListPairs(top5List) {
             response = await api.getTop5ListPairs();
             if (response.data.success) {
+              let active = "home";
               let pairsArray = response.data.idNamePairs.filter(
                 (e) => e.ownerEmail == auth.user.email
               );
@@ -216,6 +268,7 @@ function GlobalStoreContextProvider(props) {
                 payload: {
                   idNamePairs: pairsArray,
                   top5List: top5List,
+                  currentModeActive: active,
                 },
               });
             }
@@ -225,6 +278,7 @@ function GlobalStoreContextProvider(props) {
       }
       updateList(top5List);
     }
+    history.push("/");
   };
 
   // THIS FUNCTION PROCESSES CLOSING THE CURRENTLY LOADED LIST
@@ -250,6 +304,7 @@ function GlobalStoreContextProvider(props) {
       views: 0,
       publishStatus: false,
       comments: [],
+      username: auth.user.username,
     };
     const response = await api.createTop5List(payload);
     if (response.data.success) {
@@ -272,13 +327,14 @@ function GlobalStoreContextProvider(props) {
   store.loadIdNamePairs = async function () {
     const response = await api.getTop5ListPairs();
     if (response.data.success) {
+      let active = "home";
       let pairsArray = response.data.idNamePairs.filter(
         (e) => e.ownerEmail == auth.user.email
       );
       console.log(pairsArray);
       storeReducer({
         type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
-        payload: pairsArray,
+        payload: { idNamePairs: pairsArray, currentModeActive: active },
       });
     } else {
       console.log("API FAILED TO GET THE LIST PAIRS");
@@ -411,6 +467,35 @@ function GlobalStoreContextProvider(props) {
         payload: store.currentList,
       });
     }
+  };
+
+  store.homeButtonActive = function () {
+    let active = "home";
+    storeReducer({
+      type: GlobalStoreActionType.HOME_BUTTON_ACTIVE,
+      payload: active,
+    });
+  };
+  store.allListsButtonActive = function () {
+    let active = "allLists";
+    storeReducer({
+      type: GlobalStoreActionType.ALL_LISTS_BUTTON_ACTIVE,
+      payload: active,
+    });
+  };
+  store.allUsersButtonActive = function () {
+    let active = "allUsers";
+    storeReducer({
+      type: GlobalStoreActionType.ALL_USERS_BUTTON_ACTIVE,
+      payload: active,
+    });
+  };
+  store.communityButtonActive = function () {
+    let active = "community";
+    storeReducer({
+      type: GlobalStoreActionType.COMMUNITY_BUTTON_ACTIVE,
+      payload: active,
+    });
   };
 
   store.undo = function () {

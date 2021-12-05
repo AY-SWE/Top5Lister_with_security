@@ -11,6 +11,7 @@ const Top5ListSchema = new Schema(
     views: { type: Number },
     publishStatus: { type: Boolean },
     comments: { type: [String], required: true },
+    username: { type: String, required: true },
   },
   { timestamps: true }
 );

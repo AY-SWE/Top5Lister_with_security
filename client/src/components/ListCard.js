@@ -22,10 +22,13 @@ function ListCard(props) {
   const [editActive, setEditActive] = useState(false);
   const [text, setText] = useState("");
   const { idNamePair } = props;
-  const likes = idNamePair.views;
+
+  let publishStatus = "Edit";
+  if (idNamePair.publishStatus) {
+    publishStatus = "Published";
+  }
 
   function handleLoadList(event, id) {
-    console.log(likes);
     if (!event.target.disabled) {
       // CHANGE THE CURRENT LIST
       store.setCurrentList(id);
@@ -68,16 +71,26 @@ function ListCard(props) {
       id={idNamePair._id}
       key={idNamePair._id}
       sx={{ marginTop: "1px", display: "flex", p: 1 }}
-      button
-      onClick={(event) => {
-        handleLoadList(event, idNamePair._id);
-      }}
       style={{
         fontSize: "24pt",
         width: "100%",
       }}
     >
-      <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
+      <Box sx={{ p: 1, flexGrow: 1 }}>
+        <Box>{idNamePair.name}</Box>
+        <Box sx={{ p: 1, fontSize: "10pt" }}>
+          {"By: " + idNamePair.username}
+        </Box>
+        <Box
+          sx={{ p: 1, fontSize: "10pt" }}
+          button
+          onClick={(event) => {
+            handleLoadList(event, idNamePair._id);
+          }}
+        >
+          {publishStatus}
+        </Box>
+      </Box>
 
       <Box sx={{ p: 1 }}>
         <IconButton onClick={handleToggleEdit} aria-label="like">
@@ -106,12 +119,7 @@ function ListCard(props) {
         </IconButton>
 
         <Box sx={{ p: 1, flexGrow: 1, fontSize: "1pt" }}>
-          <IconButton
-            onClick={(event) => {
-              handleDeleteList(event, idNamePair._id);
-            }}
-            aria-label="expand"
-          >
+          <IconButton onClick={handleToggleEdit} aria-label="expand">
             <ExpandMoreOutlinedIcon style={{ fontSize: "30pt" }} />
           </IconButton>
         </Box>
@@ -119,26 +127,6 @@ function ListCard(props) {
     </ListItem>
   );
 
-  if (editActive) {
-    cardElement = (
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id={"list-" + idNamePair._id}
-        label="Top 5 List Name"
-        name="name"
-        autoComplete="Top 5 List Name"
-        className="list-card"
-        onKeyPress={handleKeyPress}
-        onChange={handleUpdateText}
-        defaultValue={idNamePair.name}
-        inputProps={{ style: { fontSize: 48 } }}
-        InputLabelProps={{ style: { fontSize: 24 } }}
-        autoFocus
-      />
-    );
-  }
   return cardElement;
 }
 

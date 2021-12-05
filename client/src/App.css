@@ -10,7 +10,7 @@
   --swatch-primary: #e6e6e6;
   --swatch-complement: #e1e4cb;
   --swatch-contrast: #111111;
-  --swatch-accent: #669966;
+  --swatch-accent: #a19e9e;
   --swatch-status: #123456;
   --my-font-family: "Robaaaoto";
   --bounceEasing: cubic-bezier(0.51, 0.92, 0.24, 1.15);
@@ -234,10 +234,10 @@ body {
 #workspace-home,
 #workspace-edit {
   position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
+  left: -22%;
+  top: 15%;
+  width: 120%;
+  height: 80%;
 }
 
 #edit-numbering {
@@ -255,7 +255,18 @@ body {
   top: 0%;
   width: 80%;
   height: 100%;
-  background-color: var(--swatch-primary);
+  background-color: #ddccf3;
+  border-radius: 8px;
+}
+
+#edit-items2 {
+  position: absolute;
+  left: 1%;
+  top: 10%;
+  width: 98%;
+  height: 70%;
+  background-color: var(--swatch-status);
+  border-radius: 8px;
 }
 
 .item-number,
