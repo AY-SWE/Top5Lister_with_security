@@ -100,29 +100,29 @@ export default function NavigateBar() {
     store.homeButtonActive();
   }
   function handleAllLists() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handleUsers() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handleCommunity() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
 
   function handlePublishDateNewest() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handlePublishDateOldest() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handleViews() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handleLikesMenuItem() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
   function handleDislikesMenuItem() {
-    history.push("/login/");
+    console.log("allLists clicked");
   }
 
   return (

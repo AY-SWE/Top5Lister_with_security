@@ -30,7 +30,7 @@ function WorkspaceScreen() {
   function handleToggleEdit(event) {
     event.stopPropagation();
     setText(store.currentList.name); //adding this will fix the error where if you edit a listname and made no change and press enter an error shows up
-    toggleEdit();
+    //toggleEdit();
   }
 
   function toggleEdit() {
@@ -45,6 +45,10 @@ function WorkspaceScreen() {
     let id = store.currentList._id;
     store.changeListName(id, text);
     toggleEdit();
+  }
+
+  function handlePublish(event) {
+    console.log("publish Button clicked");
   }
 
   function handleUpdateText(event) {
@@ -68,6 +72,7 @@ function WorkspaceScreen() {
         <TextField
           style={{ width: 350 }}
           onChange={handleUpdateText}
+          onClick={handleToggleEdit}
           required
           fullWidth
           id="listName"
@@ -101,9 +106,9 @@ function WorkspaceScreen() {
               top: "88%",
               borderRadius: 8,
             }}
-            disabled={true}
             variant="contained"
             size="large"
+            onClick={handlePublish}
           >
             Publish
           </Button>

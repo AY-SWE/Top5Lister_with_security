@@ -31,6 +31,7 @@ export const GlobalStoreActionType = {
   ALL_LISTS_BUTTON_ACTIVE: "ALL_LISTS_BUTTON_ACTIVE",
   ALL_USERS_BUTTON_ACTIVE: "ALL_USERS_BUTTON_ACTIVE",
   COMMUNITY_BUTTON_ACTIVE: "COMMUNITY_BUTTON_ACTIVE",
+  BUTTON_INACTIVE: "BUTTON_INACTIVE",
 };
 
 // WE'LL NEED THIS TO PROCESS TRANSACTIONS
@@ -131,7 +132,8 @@ function GlobalStoreContextProvider(props) {
           newListCounter: store.newListCounter,
           isListNameEditActive: false,
           isItemEditActive: false,
-          listMarkedForDeletion: payload,
+          listMarkedForDeletion: payload.listMarkedForDeletion,
+          currentModeActive: payload.currentModeActive,
           canUndo: tps.hasTransactionToUndo(),
           canRedo: tps.hasTransactionToRedo(),
           canClose: store.currentList !== null,
@@ -146,6 +148,7 @@ function GlobalStoreContextProvider(props) {
           isListNameEditActive: false,
           isItemEditActive: false,
           listMarkedForDeletion: null,
+          currentModeActive: payload,
           canUndo: tps.hasTransactionToUndo(),
           canRedo: tps.hasTransactionToRedo(),
           canClose: store.currentList !== null,
@@ -197,9 +200,9 @@ function GlobalStoreContextProvider(props) {
       case GlobalStoreActionType.HOME_BUTTON_ACTIVE: {
         return setStore({
           idNamePairs: store.idNamePairs,
-          currentList: payload,
+          currentList: null,
           newListCounter: store.newListCounter,
-          isListNameEditActive: true,
+          isListNameEditActive: false,
           isItemEditActive: false,
           listMarkedForDeletion: null,
           currentModeActive: payload,
@@ -208,9 +211,9 @@ function GlobalStoreContextProvider(props) {
       case GlobalStoreActionType.ALL_LISTS_BUTTON_ACTIVE: {
         return setStore({
           idNamePairs: store.idNamePairs,
-          currentList: payload,
+          currentList: null,
           newListCounter: store.newListCounter,
-          isListNameEditActive: true,
+          isListNameEditActive: false,
           isItemEditActive: false,
           listMarkedForDeletion: null,
           currentModeActive: payload,
@@ -219,9 +222,9 @@ function GlobalStoreContextProvider(props) {
       case GlobalStoreActionType.ALL_USERS_BUTTON_ACTIVE: {
         return setStore({
           idNamePairs: store.idNamePairs,
-          currentList: payload,
+          currentList: null,
           newListCounter: store.newListCounter,
-          isListNameEditActive: true,
+          isListNameEditActive: false,
           isItemEditActive: false,
           listMarkedForDeletion: null,
           currentModeActive: payload,
@@ -230,9 +233,21 @@ function GlobalStoreContextProvider(props) {
       case GlobalStoreActionType.COMMUNITY_BUTTON_ACTIVE: {
         return setStore({
           idNamePairs: store.idNamePairs,
-          currentList: payload,
+          currentList: null,
           newListCounter: store.newListCounter,
-          isListNameEditActive: true,
+          isListNameEditActive: false,
+          isItemEditActive: false,
+          listMarkedForDeletion: null,
+          currentModeActive: payload,
+        });
+      }
+
+      case GlobalStoreActionType.BUTTON_INACTIVE: {
+        return setStore({
+          idNamePairs: store.idNamePairs,
+          currentList: null,
+          newListCounter: store.newListCounter,
+          isListNameEditActive: false,
           isItemEditActive: false,
           listMarkedForDeletion: null,
           currentModeActive: payload,
@@ -347,12 +362,13 @@ function GlobalStoreContextProvider(props) {
   // showDeleteListModal, and hideDeleteListModal
   store.markListForDeletion = async function (id) {
     // GET THE LIST
+    let active = "home";
     let response = await api.getTop5ListById(id);
     if (response.data.success) {
       let top5List = response.data.top5List;
       storeReducer({
         type: GlobalStoreActionType.MARK_LIST_FOR_DELETION,
-        payload: top5List,
+        payload: { listMarkedForDeletion: top5List, currentModeActive: active },
       });
     }
     store.showDeleteListModal();
@@ -386,9 +402,10 @@ function GlobalStoreContextProvider(props) {
   };
 
   store.unmarkListForDeletion = function () {
+    let active = "home";
     storeReducer({
       type: GlobalStoreActionType.UNMARK_LIST_FOR_DELETION,
-      payload: null,
+      payload: active,
     });
     store.hideDeleteListModal();
   };
@@ -475,6 +492,7 @@ function GlobalStoreContextProvider(props) {
       type: GlobalStoreActionType.HOME_BUTTON_ACTIVE,
       payload: active,
     });
+    history.push("/");
   };
   store.allListsButtonActive = function () {
     let active = "allLists";
@@ -482,6 +500,7 @@ function GlobalStoreContextProvider(props) {
       type: GlobalStoreActionType.ALL_LISTS_BUTTON_ACTIVE,
       payload: active,
     });
+    history.push("/");
   };
   store.allUsersButtonActive = function () {
     let active = "allUsers";
@@ -489,11 +508,21 @@ function GlobalStoreContextProvider(props) {
       type: GlobalStoreActionType.ALL_USERS_BUTTON_ACTIVE,
       payload: active,
     });
+    history.push("/");
   };
   store.communityButtonActive = function () {
     let active = "community";
     storeReducer({
       type: GlobalStoreActionType.COMMUNITY_BUTTON_ACTIVE,
+      payload: active,
+    });
+    history.push("/");
+  };
+
+  store.logoutInactive = function () {
+    let active = "null";
+    storeReducer({
+      type: GlobalStoreActionType.BUTTON_INACTIVE,
       payload: active,
     });
   };

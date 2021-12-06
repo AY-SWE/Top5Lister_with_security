@@ -4,7 +4,6 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 /*
     This React component represents a single item in our
     Top 5 List, which can be edited or moved around.
@@ -14,6 +13,8 @@ import EditIcon from "@mui/icons-material/Edit";
 function Top5Item(props) {
   const { store } = useContext(GlobalStoreContext);
   const [editActive, setEditActive] = useState(false);
+  const [text, setText] = useState("");
+
   const [draggedTo, setDraggedTo] = useState(0);
 
   function handleKeyPress(event) {
@@ -29,6 +30,9 @@ function Top5Item(props) {
     event.stopPropagation();
     console.log("handleToggleEdit");
     toggleEdit();
+  }
+  function handleUpdateText(event) {
+    setText(event.target.value);
   }
 
   function toggleEdit() {
@@ -50,52 +54,49 @@ function Top5Item(props) {
   if (draggedTo) {
     itemClass = "top5-item-dragged-to";
   }
+  return (
+    <ListItem
+      id={"item-" + (index + 1)}
+      key={props.key}
+      className={itemClass}
+      sx={{ display: "flex", p: 1 }}
+      style={{
+        fontSize: "30pt",
+        width: "100%",
+      }}
+    >
+      <Box //NUMBERS 1,2,3,4,5
+        sx={{
+          height: 28,
+          p: 1.5,
+          borderRadius: 3,
+          backgroundColor: "gold",
+          fontSize: 30,
+        }}
+      >
+        <div>{index + 1 + "."}</div>
+      </Box>
 
-  if (editActive) {
-    return (
       <TextField
-        margin="normal"
+        sx={{
+          p: 1,
+          flexGrow: 1,
+          background: "gold",
+          height: 35,
+          borderRadius: 3,
+        }}
         required
         fullWidth
         id={"item-" + (index + 1)}
-        label="Top 5 Item"
         className="top5-item"
-        onKeyPress={handleKeyPress}
         defaultValue={props.text}
-        inputProps={{ style: { fontSize: 48 } }}
-        InputLabelProps={{ style: { fontSize: 24 } }}
         autoFocus
+        onClick={handleToggleEdit}
+        onChange={handleUpdateText}
+        onKeyPress={handleKeyPress}
       />
-    );
-  } else {
-    let itemClass = "top5-item";
-    if (draggedTo) {
-      itemClass = "top5-item-dragged-to";
-    }
-    return (
-      <ListItem
-        id={"item-" + (index + 1)}
-        key={props.key}
-        className={itemClass}
-        sx={{ display: "flex", p: 1 }}
-        style={{
-          fontSize: "48pt",
-          width: "100%",
-        }}
-      >
-        <Box sx={{ p: 1 }}>
-          <IconButton
-            disabled={editStatus}
-            onClick={handleToggleEdit}
-            aria-label="edit"
-          >
-            <EditIcon style={{ fontSize: "48pt" }} />
-          </IconButton>
-        </Box>
-        <Box sx={{ p: 1, flexGrow: 1 }}>{props.text}</Box>
-      </ListItem>
-    );
-  }
+    </ListItem>
+  );
 }
 
 export default Top5Item;
