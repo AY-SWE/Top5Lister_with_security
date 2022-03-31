@@ -14,6 +14,7 @@ import NavigateBar from "./NavigateBar";
     This serves as a module so that we can import
     all the other components as we wish.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 export {

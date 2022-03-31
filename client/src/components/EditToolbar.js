@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/HighlightOff';
     This toolbar is a functional React component that
     manages the undo/redo/close buttons.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 function EditToolbar() {

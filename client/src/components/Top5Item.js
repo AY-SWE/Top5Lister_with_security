@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
     This React component represents a single item in our
     Top 5 List, which can be edited or moved around.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 function Top5Item(props) {

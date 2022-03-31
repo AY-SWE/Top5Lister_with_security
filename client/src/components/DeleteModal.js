@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
     information and display its name in this modal. If the user presses
     confirm, it will be deleted.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 function DeleteModal() {

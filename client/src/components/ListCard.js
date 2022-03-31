@@ -15,6 +15,7 @@ import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
     a list for editing and it has controls for changing its 
     name or deleting it.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 function ListCard(props) {

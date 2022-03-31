@@ -11,6 +11,7 @@ import NavigateBar from "./NavigateBar";
 /*
     This React component lists all the top5 lists in the UI.    This is ListSelector in HW3
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 const HomeScreen = () => {

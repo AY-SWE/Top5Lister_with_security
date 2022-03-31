@@ -18,6 +18,10 @@ import { GlobalStoreContext } from "../store";
 
 import AccountErrorModal from "../components/AccountErrorModal";
 
+/**
+ * @author Andy Yang
+ */
+
 export default function LoginScreen() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);

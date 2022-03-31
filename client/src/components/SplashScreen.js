@@ -1,3 +1,6 @@
+/**
+ * @author Andy Yang
+ */
 export default function SplashScreen() {
   return (
     <div id="welcome-screen">

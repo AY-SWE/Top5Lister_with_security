@@ -15,6 +15,7 @@ import LoginScreen from "./components/LoginScreen";
 /*
     This is our application's top-level component.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 /*

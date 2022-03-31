@@ -9,6 +9,7 @@ import AuthContext from "../auth";
     This is our global data store. Note that it uses the Flux design pattern,
     which makes use of things like actions and reducers. 
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 

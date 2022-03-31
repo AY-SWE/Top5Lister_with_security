@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 /*
     Our Status bar React component goes at the bottom of our UI.
     
+    @author Andy Yang
     @author McKilla Gorilla
 */
 function Statusbar() {

@@ -24,6 +24,10 @@ import { useLocation } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 
+/**
+ * @author Andy Yang
+ */
+
 export default function NavigateBar() {
   const { auth } = useContext(AuthContext);
   const { store } = useContext(GlobalStoreContext);

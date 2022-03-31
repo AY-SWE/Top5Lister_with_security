@@ -2,6 +2,10 @@ import React, { createContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../api";
 
+/**
+ * @author Andy Yang
+ */
+
 const AuthContext = createContext();
 console.log("create AuthContext: " + AuthContext);
 
